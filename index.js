@@ -1,28 +1,34 @@
-
-let firstCard = getRandomCard()
-let secondCard = getRandomCard()
-let cards = [firstCard, secondCard] // array - ordered list of items
-let sum = firstCard + secondCard
+let cards = []
+let sum = 0
 let hasBlackJack = false
-let isAlive = true
+let isAlive = false
 let messageEl = document.getElementById("message-el");
 let message = ""
 let sumEl = document.getElementById("sum-el")
 let cardsEl = document.getElementById("cards-el")
 
-// Make this function return a random number between 1 and 13
 function getRandomCard() {
-    let randomNumber = Math.floor( Math.random() * 11 ) + 1
-    return randomNumber
+    let randomNumber = Math.floor( Math.random()*13 ) + 1
+    if (randomNumber > 10) {
+        return 10
+    } else if (randomNumber === 1) {
+        return 11
+    } else {
+        return randomNumber
+    }
 }
 
 function startGame() {
+    isAlive = true
+    let firstCard = getRandomCard()
+    let secondCard = getRandomCard()
+    cards = [firstCard, secondCard]
+    sum = firstCard + secondCard
     renderGame()    
 }
 
 function renderGame() {
     cardsEl.textContent = "Cards: "
-    // Create a for loop that renders out all the cards instead of just two
     for ( let i = 0; i < cards.length; i++) {
         cardsEl.textContent += cards[i] + " "
     }
@@ -40,10 +46,11 @@ function renderGame() {
 }
 
 function newCard() {
-    let card = getRandomCard()
-    sum += card
-    // Push the card to the cards array
-    cards.push(card)
-    console.log(cards)
-    renderGame()
+    // Only allow the player to get a new card if she IS alive and does NOT have Blackjack
+    if (hasBlackJack === false && isAlive === true) {
+        let card = getRandomCard()
+        sum += card
+        cards.push(card)
+        renderGame()
+    }
 }
