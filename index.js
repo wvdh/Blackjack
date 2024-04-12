@@ -27,6 +27,10 @@ function getRandomCard() {
 }
 
 function startGame() {
+    // Reset game state variables
+    cards = []
+    sum = 0
+    hasBlackJack = false
     isAlive = true
     let firstCard = getRandomCard()
     let secondCard = getRandomCard()
